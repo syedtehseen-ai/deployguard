@@ -31,3 +31,8 @@ spec:
             port: 8000
           initialDelaySeconds: 10
           periodSeconds: 10
+        envFrom:
+          - configMapRef:
+              name: deployguard-config
+          - secretRef:
+              name: deployguard-secret
