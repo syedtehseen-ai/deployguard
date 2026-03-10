@@ -20,6 +20,11 @@ spec:
           envFrom:
             - secretRef:
                 name: deployguard-secret
+          livenessProbe:
+            tcpSocket:
+              port: 5432
+            initialDelaySeconds: 10
+            periodSeconds: 5
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
               name: postgres-storage

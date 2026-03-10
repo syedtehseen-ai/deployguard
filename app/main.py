@@ -1,4 +1,6 @@
 from fastapi import FastAPI
+from app.database import get_connection
+from app.schemas import DeploymentCreate
 
 app = FastAPI(title="DeployGuard")
 
@@ -8,9 +10,31 @@ def health_check():
 
 @app.get("/deployments")
 def get_deployments():
-    return {
-        "deployments": [
-            {"name": "sample-app", "status": "Running"},
-            {"name": "worker", "status": "Pending"}
-        ]
-    }
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM deployments")
+    rows = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return {"deployments": rows}
+
+@app.post("/deployments")
+def create_deployment(deployment: DeploymentCreate):
+
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "INSERT INTO deployments (name, status) VALUES (%s, %s)",
+        (deployment.name, deployment.status)
+    )
+
+    conn.commit()
+
+    cursor.close()
+    conn.close()
+
+    return {"message": "deployment stored"}
