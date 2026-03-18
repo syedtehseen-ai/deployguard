@@ -14,14 +14,20 @@ spec:
     spec:
       containers:
       - name: deployguard
-        image: tehseen45/deployguard:v0.3
+        image: tehseen45/deployguard:v0.4
         imagePullPolicy: IfNotPresent
         resources:
           requests:
             cpu: "100m"
             memory: "128Mi"
           limits:
+            cpu: "500m"
             memory: "256Mi"
+        securityContext:
+          runAsNonRoot: true # enforcing the pod not to start as root
+          readOnlyRootFilesystem: true # No writing to Root FS
+          runAsUser: 1000 # enforcing to start pod/container as UID 1000
+          allowPrivilegeEscalation: false # No switching to root or high priv
         ports:
           - containerPort: 8000
         readinessProbe:
@@ -39,7 +45,6 @@ spec:
         env:
           - name: DB_HOST
             value: postgres-service
-
           - name: DB_NAME
             value: deployguard
         envFrom:
