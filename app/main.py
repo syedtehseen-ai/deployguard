@@ -1,12 +1,17 @@
 from fastapi import FastAPI
 from app.database import get_connection
 from app.schemas import DeploymentCreate
+from app.routes.analyze import router
 
 app = FastAPI(title="DeployGuard")
+
 
 @app.get("/health")
 def health_check():
     return {"status": "ok"}
+
+app.include_router(router)
+
 
 @app.get("/deployments")
 def get_deployments():
