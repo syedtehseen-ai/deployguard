@@ -1,4 +1,8 @@
-Implement analyzer engine with v0.2 improvement and Hardening
+------ MVP ---
+normalize score (0–10 or 0–100)
+
+
+------DONE----- Implement analyzer engine with v0.2 OF  PHASE 1 improvement and Hardening ----
 
 list(yaml.safe_load_all(yaml_input)) 
 [
@@ -29,3 +33,4 @@ def calculate_risk(issues):
     else:
         return "HIGH"
 2. Implement multi document
+---------------------------------------------------------------------
