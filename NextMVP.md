@@ -1,3 +1,8 @@
+------ Phase 02 --------
+created a infra (networking) for eks
+
+next mvp is to create a eks infra eks cluster, worker node, iam role etc
+
 ------ MVP ---
 normalize score (0–10 or 0–100)
 
