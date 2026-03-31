@@ -16,11 +16,6 @@ variable "igw_name" {
   type        = string
 }
 
-# variable "vpc_id" {
-#   description = "The ID of the VPC coming from outputs of the vpc module through root main.tf"
-#   type        = string
-# }
-
 variable "pubsubnets" {
   description = "Map of subnets for all environments"
   type        = map(object({ 
@@ -43,24 +38,25 @@ variable "tags" {
   default     = {}
 }
 
-# variable "igw_id" {
-#   description = "The ID of the IGW"
-#   type        = string
-# }
-
-# variable "public_subnets_ids" {
-#   description = "Map of subnets IDs"
-#   type        = map(string)
-# }
-# variable "natgw_id" {
-#   description = "The ID of the Nat GW"
-#   type        = map(string)
-# }
 variable "private_subnet_natgw_map" {
   description = "Map private subnet key to NAT Gateway key"
   type        = map(string)
 }
-# variable "private_subnets_ids" {
-#   description = "Map of subnets IDs"
-#   type        = map(string)
-# }
+
+
+variable "eks_version" {
+  description = "The name of the env"
+  type        = string
+}
+variable "cluster_name" {
+     description = "The name of the cluster"
+  type        = string
+}
+
+variable "instance_type" {}
+variable "desired_capacity" {}
+variable "min_capacity" {}
+variable "max_capacity" {}
+variable "key_name" {}
+variable "public_key_path" {}
+variable "env_name" {}

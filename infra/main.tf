@@ -37,3 +37,21 @@ module "route_tables" {
   private_subnet_natgw_map = var.private_subnet_natgw_map       # from dev.tfvars
   tags                     = var.tags
 }
+
+############################################################
+# EKS Module
+############################################################
+module "eks" {
+  source                   = "./modules/eks"
+  private_subnets_ids      = module.subnets.private_subnets_ids # list of private subnet IDs
+  eks_version = var.eks_version
+  cluster_name = var.cluster_name
+  instance_type    = var.instance_type
+  desired_capacity = var.desired_capacity
+  min_capacity     = var.min_capacity
+  max_capacity     = var.max_capacity
+  tags                     = var.tags
+  vpc_id                   = module.vpc.vpc_id
+  key_name        = var.key_name
+  public_key_path = var.public_key_path
+}

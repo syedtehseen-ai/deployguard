@@ -8,6 +8,8 @@ k8s-env/
 .vscode/
 .dockerignore
 
+temp/
+temp/*
 
 # Local .terraform directories
 .terraform/
