@@ -117,3 +117,10 @@ resource "aws_security_group" "node_sg" {
 output "node_sg_id" {
   value = aws_security_group.node_sg.id
 }
+
+
+
+#### ECR ####
+resource "aws_ecr_repository" "main" {
+  name                 = "deployguard-ecr-${var.env_name}"
+}
