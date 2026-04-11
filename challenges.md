@@ -95,3 +95,7 @@ The Kubernetes Service selector did not match the labels of the target pods. Bec
 
 3. NetworkPolicy Not Enforced Due to Unsupported CNI
 A NetworkPolicy was created to restrict database access so that only the DeployGuard application could connect to PostgreSQL. However, the policy was not enforced because the cluster was using a CNI plugin that did not support NetworkPolicy enforcement. After identifying this limitation, the issue was understood and documented as a cluster networking constraint.
+
+# HELM Phase
+
+helm create deployguard

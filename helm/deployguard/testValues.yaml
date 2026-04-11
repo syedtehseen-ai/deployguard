@@ -1,0 +1,53 @@
+
+metadata:
+  name: deployguard
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: deployguard
+  template:
+    metadata:
+      labels:
+        app: deployguard
+    spec:
+      containers:
+      - name: deployguard
+        image: tehseen45/deployguard:v0.8
+        imagePullPolicy: IfNotPresent
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "500m"
+            memory: "256Mi"
+        securityContext:
+          runAsNonRoot: true # enforcing the pod not to start as root
+          readOnlyRootFilesystem: true # No writing to Root FS
+          runAsUser: 1000 # enforcing to start pod/container as UID 1000
+          allowPrivilegeEscalation: false # No switching to root or high priv
+        ports:
+          - containerPort: 8000
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        env:
+          - name: DB_HOST
+            value: postgres-service
+          - name: DB_NAME
+            value: deployguard
+        envFrom:
+          - configMapRef:
+              name: deployguard-config
+          - secretRef:
+              name: deployguard-secret

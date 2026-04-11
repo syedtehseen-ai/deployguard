@@ -146,3 +146,53 @@ The next milestone is to build the core DeployGuard feature:
 * Provide recommendations
 
 ---
+
+
+
+#### IAM EKS 
+
+Harden
+Restrict API access:
+Private endpoint only (later)
+Use IAM roles properly
+Avoid admin access everywhere
+
+
+
+#### NAT 
+
+(Advanced but powerful)
+
+Instead of NAT dependency, you can add:
+
+👉 VPC endpoints:
+
+SSM
+ECR
+EC2
+
+👉 Then nodes work without internet
+
+Reduce NAT dependency:
+
+Create endpoints for:
+
+ECR (api + dkr)
+S3
+STS
+
+Example:
+
+aws ec2 create-vpc-endpoint \
+  --vpc-id <vpc-id> \
+  --service-name com.amazonaws.ap-south-1.ecr.api \
+  --vpc-endpoint-type Interface
+
+
+
+# HELM
+## add customLabels through helper.tpl
+  ## 🔥 Custom labels (optional)
+{{- with .Values.customLabels }}
+{{ toYaml . | indent 0 }}
+{{- end }}
